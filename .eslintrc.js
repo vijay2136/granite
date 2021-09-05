@@ -49,14 +49,6 @@ module.exports = {
     "react/no-danger": "error",
     "react/no-danger-with-children": "error",
     "react/no-unused-prop-types": "error",
-    "react/sort-prop-types": [
-      "error",
-      {
-        callbacksLast: true,
-        requiredFirst: true,
-        sortShapeProp: true
-      }
-    ],
     "react/jsx-key": "error",
     "react/jsx-no-duplicate-props": "error",
     "react/jsx-no-undef": "error",

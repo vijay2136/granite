@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :load_task, only: [:show, :update]
+
   def index
     tasks = Task.all
     render status: :ok, json: { tasks: tasks }
@@ -17,15 +19,26 @@ class TasksController < ApplicationController
   end
 
   def show
-    task = Task.find_by(slug: params[:slug])
-    if task
-      render status: :ok, json: { task: task }
+    render status: :ok, json: { task: @task }
+  end
+
+  def update
+    if @task.update(task_params)
+      render status: :ok, json: { notice: "Successfully updated task." }
     else
-      render status: :not_found, json: { error: t("task.not_found") }
+      render status: :unprocessable_entity,
+        json: { error: @task.errors.full_messages.to_sentence }
     end
   end
 
   private
+
+    def load_task
+      @task = Task.find_by(slug: params[:slug])
+      unless @task
+        render status: :not_found, json: { error: t("task.not_found") }
+      end
+  end
 
     def task_params
       params.require(:task).permit(:title)

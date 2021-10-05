@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
+  before_action :authenticate_user_using_x_auth_token, except: [:new, :edit]
   before_action :load_task, only: %i[show update destroy]
 
   def index

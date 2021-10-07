@@ -3,6 +3,7 @@
 class TasksController < ApplicationController
   before_action :authenticate_user_using_x_auth_token, except: [:new, :edit]
   before_action :load_task, only: %i[show update destroy]
+  before_action :authenticate_user_using_x_auth_token
 
   def index
     tasks = Task.all
@@ -10,11 +11,11 @@ class TasksController < ApplicationController
    end
 
   def create
-    @task = Task.new(task_params)
-    if @task.save
+    task = Task.new(task_params.merge(task_owner_id: @current_user.id))
+    if task.save
       render status: :ok, json: { notice: t("successfully_created", entity: "Task") }
     else
-      errors = task.errors.full_messages.to_sentence
+      errors = @task.errors.full_messages.to_sentence
       render status: :unprocessable_entity, json: { error: errors }
     end
   end

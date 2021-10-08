@@ -23,7 +23,7 @@ const EditTask = ({ history }) => {
     try {
       await tasksApi.update({
         slug,
-        payload: { task: { title, user_id: userId } }
+        payload: { task: { title, assigned_user_id: userId } }
       });
       setLoading(false);
       history.push("/");

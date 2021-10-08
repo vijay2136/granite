@@ -17,7 +17,7 @@ const CreateTask = ({ history }) => {
   const handleSubmit = async event => {
     event.preventDefault();
     try {
-      await tasksApi.create({ task: { title, user_id: userId } });
+      await tasksApi.create({ task: { title, assigned_user_id: userId } });
       setLoading(false);
       history.push("/");
     } catch (error) {

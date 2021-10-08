@@ -12,15 +12,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_07_141845) do
+ActiveRecord::Schema.define(version: 2021_10_08_151313) do
 
   create_table "tasks", force: :cascade do |t|
     t.text "title", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug", null: false
-    t.integer "user_id"
     t.integer "task_owner_id"
+    t.integer "assigned_user_id"
     t.index ["slug"], name: "index_tasks_on_slug", unique: true
   end
 
@@ -34,6 +34,6 @@ ActiveRecord::Schema.define(version: 2021_10_07_141845) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "tasks", "users", column: "assigned_user_id"
   add_foreign_key "tasks", "users", column: "task_owner_id", on_delete: :cascade
-  add_foreign_key "tasks", "users", on_delete: :cascade
 end

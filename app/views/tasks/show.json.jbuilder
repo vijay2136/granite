@@ -5,8 +5,8 @@ json.task do
     :title
 
   json.assigned_user do
-    json.id @task.user.id
-    json.name @task.user.name
+    json.id @task.assigned_user.id
+    json.name @task.assigned_user.name
   end
 
   json.task_owner do

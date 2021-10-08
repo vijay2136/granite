@@ -65,3 +65,5 @@ end
 # other gems if any
 
 gem "react-rails"
+
+gem "simplecov", require: false, group: :test

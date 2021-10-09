@@ -6,6 +6,7 @@ class Task < ApplicationRecord
   validates :slug, uniqueness: true
   validate :slug_not_changed
   before_create :set_slug
+  has_many :comments, dependent: :destroy
 
   private
 

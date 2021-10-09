@@ -15,6 +15,7 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, on: :create
   before_save :to_lowercase
   before_destroy :assign_tasks_to_task_owners
+  has_many :comments, dependent: :destroy
 
   def assign_tasks_to_task_owners
     tasks_whose_owner_is_not_current_user = assigned_tasks.select { |task| task.task_owner_id != id }

@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
 
-import { isNil, isEmpty, either } from "ramda";
+import { all, isNil, isEmpty, either } from "ramda";
 
 import tasksApi from "apis/tasks";
 import Container from "components/Container";
 import PageLoader from "components/PageLoader";
-import Table from "components/Tasks/Table";
+import Table from "components/Tasks/Table/index";
 
 const Dashboard = ({ history }) => {
-  const [tasks, setTasks] = useState([]);
+  const [pendingTasks, setPendingTasks] = useState([]);
+  const [completedTasks, setCompletedTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchTasks = async () => {
     try {
       const response = await tasksApi.list();
-      setTasks(response.data.tasks);
-      setLoading(false);
+      setPendingTasks(response.data.tasks.pending);
+      setCompletedTasks(response.data.tasks.completed);
     } catch (error) {
       logger.error(error);
+    } finally {
       setLoading(false);
     }
   };
@@ -28,6 +30,17 @@ const Dashboard = ({ history }) => {
       await fetchTasks();
     } catch (error) {
       logger.error(error);
+    }
+  };
+
+  const handleProgressToggle = async ({ slug, progress }) => {
+    try {
+      await tasksApi.update({ slug, payload: { task: { progress } } });
+      await fetchTasks();
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,11 +60,11 @@ const Dashboard = ({ history }) => {
     );
   }
 
-  if (either(isNil, isEmpty)(tasks)) {
+  if (all(either(isNil, isEmpty), [pendingTasks, completedTasks])) {
     return (
       <Container>
-        <h1 className="text-xl leading-5 text-center">
-          You have no tasks assigned 😔
+        <h1 className="my-5 text-xl leading-5 text-center">
+          You have not created or been assigned any tasks 🥳
         </h1>
       </Container>
     );
@@ -59,7 +72,22 @@ const Dashboard = ({ history }) => {
 
   return (
     <Container>
-      <Table data={tasks} destroyTask={destroyTask} showTask={showTask} />
+      {!either(isNil, isEmpty)(pendingTasks) && (
+        <Table
+          data={pendingTasks}
+          destroyTask={destroyTask}
+          showTask={showTask}
+          handleProgressToggle={handleProgressToggle}
+        />
+      )}
+      {!either(isNil, isEmpty)(completedTasks) && (
+        <Table
+          type="completed"
+          data={completedTasks}
+          destroyTask={destroyTask}
+          handleProgressToggle={handleProgressToggle}
+        />
+      )}
     </Container>
   );
 };

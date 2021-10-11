@@ -24,7 +24,7 @@
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "5.4.2",
+    "@rails/webpacker": "5.4.0",
     "axios": "^0.21.1",
     "babel-plugin-js-logger": "^1.0.17",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
@@ -39,9 +39,7 @@
     "react-toastify": "^8.0.2",
     "react_ujs": "^2.6.1",
     "remixicon": "^2.5.0",
-    "tailwindcss": "1.9.6",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+    "tailwindcss": "1.9.6"
   },
   "version": "0.1.0",
   "devDependencies": {
@@ -57,7 +55,7 @@
     "husky": "^7.0.0",
     "lint-staged": "^11.1.2",
     "prettier": "^2.3.2",
-    "webpack-dev-server": "^4.1.0"
+    "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
     "prepare": "husky install"

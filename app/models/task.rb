@@ -8,6 +8,7 @@ class Task < ApplicationRecord
   belongs_to :task_owner, foreign_key: "task_owner_id", class_name: "User"
   validates :slug, uniqueness: true
   validate :slug_not_changed
+  validates :title, presence: true
   before_create :set_slug
   has_many :comments, dependent: :destroy
 

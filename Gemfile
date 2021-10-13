@@ -70,6 +70,8 @@ gem "simplecov", require: false, group: :test
 
 gem "pundit"
 
+gem "sidekiq"
+
 group :development, :test do
   # Rails integration for factory_bot, a replacement for fixtures
   gem "factory_bot_rails"

@@ -8,6 +8,8 @@ const Input = ({
   value,
   onChange,
   placeholder,
+  min,
+  max,
   required = true
 }) => {
   return (
@@ -27,6 +29,8 @@ const Input = ({
           value={value}
           onChange={onChange}
           placeholder={placeholder}
+          min={min}
+          max={max}
           className="block w-full px-3 py-2 placeholder-gray-400
           transition duration-150 ease-in-out border
           border-gray-300 rounded-md appearance-none
@@ -44,7 +48,9 @@ Input.propTypes = {
   value: PropTypes.node,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
-  required: PropTypes.bool
+  required: PropTypes.bool,
+  min: PropTypes.number,
+  max: PropTypes.number
 };
 
 export default Input;

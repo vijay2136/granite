@@ -72,6 +72,10 @@ gem "pundit"
 
 gem "sidekiq"
 
+gem "sidekiq-cron"
+
+gem "letter_opener", group: :development
+
 group :development, :test do
   # Rails integration for factory_bot, a replacement for fixtures
   gem "factory_bot_rails"
